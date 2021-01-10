@@ -1,0 +1,19 @@
+name: schedule
+
+on:
+  schedule:
+    - cron: '0 1 * * 6'
+
+jobs:
+  schedule:
+    runs-on:  ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          key:  cache
+          path: .github/cache
+      - name: Run schedule
+        run:  .github/workflows/schedule.sh
+        env:
+          trigger: ${{ secrets.DOCKERHUB_BUILD_TRIGGER }}
